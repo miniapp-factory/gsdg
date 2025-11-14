@@ -6,16 +6,12 @@ import { Share } from "@/components/share";
 import { url } from "@/lib/metadata";
 
 const GRID_SIZE = 4;
-const TILE_VALUES = [2, 4];
 const TILE_PROBABILITIES = [0.9, 0.1];
 
 function getRandomTile() {
   return Math.random() < TILE_PROBABILITIES[0] ? 2 : 4;
 }
 
-function cloneGrid(grid: number[][]) {
-  return grid.map(row => [...row]);
-}
 
 export default function Game2048() {
   const [grid, setGrid] = useState<number[][]>(Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(0)));
@@ -97,8 +93,8 @@ export default function Game2048() {
     else if (dir === "right") times = 2;
     else if (dir === "down") times = 3;
 
-    let rotated = rotate(grid, times);
-    let compressed = compress(rotated);
+    const rotated = rotate(grid, times);
+    const compressed = compress(rotated);
     const { g: merged, gained } = merge(compressed);
     let final = compress(merged);
     final = rotate(final, (4 - times) % 4);
